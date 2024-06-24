@@ -37,7 +37,7 @@ services:
       - PDNS_gmysql_user=pdns
       - PDNS_gmysql_password=somepassword
       - PDNS_gmysql_host=pdns-db
-      - PDNS_master=yes
+      - PDNS_primary=yes
       - PDNS_api=yes
       - PDNS_api_key=someapikey
       - PDNS_webserver=yes
@@ -46,9 +46,6 @@ services:
       - PDNS_webserver-allow-from=0.0.0.0/0,::/0
       - PDNS_version_string=anonymous
       - PDNS_default_ttl=3600
-      - PDNS_soa_minimum_ttl=36000
-      - PDNS_default_soa_name=ns1.example.com
-      - PDNS_default_soa_mail=hostmaster.example.com
     depends_on:
       - pdns-db
 
@@ -64,7 +61,7 @@ services:
       - default
     # environment:
     #   - BACKEND=mysql
-    #   - PDNS_master=yes
+    #   - PDNS_primary=yes
     #   - PDNS_api=yes
     #   - PDNS_api_key=someapikey
     #   - PDNS_webserver=yes
@@ -72,9 +69,6 @@ services:
     #   - PDNS_webserver_password=somepassword
     #   - PDNS_version_string=anonymous
     #   - PDNS_default_ttl=3600
-    #   - PDNS_soa_minimum_ttl=36000
-    #   - PDNS_default_soa_name=ns1.example.com
-    #   - PDNS_default_soa_mail=hostmaster.example.com
     depends_on:
       - pdns-server
   

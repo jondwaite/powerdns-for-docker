@@ -1,10 +1,10 @@
-# PowerDNS 4.1 Docker Images based on Debian 9 (Stretch)
+# PowerDNS 4.9 Docker Images based on Debian 12 (Bookworm)
 
-This repository contains four Docker images - pdns, pdns-recursor and pdns-admin.
+This repository contains four Docker images - pdns, pdns-recursor and pdns-admin. It is forked from [PowerDNS 4.1 for Debian Stretch](https://github.com/connectitnet/powerdns-for-docker) and updated for Debian 12 and PowerDNS 4.9
 
-Image **pdns** contains completely configurable [PowerDNS 4.1.x server](https://www.powerdns.com/) with mysql and gpgsql backends.
+Image **pdns** contains completely configurable [PowerDNS 4.9.x server](https://www.powerdns.com/) with mysql and gpgsql backends.
 
-Image **pdns-recursor** contains completely configurable [PowerDNS 4.1.x recursor](https://www.powerdns.com/).
+Image **pdns-recursor** contains completely configurable [PowerDNS x.x recursor](https://www.powerdns.com/).
 
 Images **pdns-admin** contains backend (gunicorn) for [PowerDNS Admin](https://github.com/ngoduykhanh/PowerDNS-Admin) web app, written in Flask, for managing PowerDNS servers. [PowerDNS Admin](https://github.com/ngoduykhanh/PowerDNS-Admin) is also completely configurable.
 

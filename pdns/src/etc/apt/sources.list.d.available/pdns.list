@@ -1,1 +1,1 @@
-deb [arch=amd64] http://repo.powerdns.com/debian stretch-auth-41 main
+deb [signed-by=/etc/apt/keyrings/auth-49-pub.asc] http://repo.powerdns.com/debian bookworm-auth-49 main

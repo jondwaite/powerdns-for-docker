@@ -22,11 +22,12 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s
       retries: 5
+      
   pdns-server:
     build:
       dockerfile: Dockerfile
       context: pdns/
-    image: connectitnet/pdns
+    image: jondwaite/pdns
     ports:
       - "5353:53/udp"
     networks:
@@ -53,7 +54,7 @@ services:
     build:
       dockerfile: Dockerfile
       context: pdns-recursor/
-    image: connectitnet/pdns-recursor
+    image: jondwaite/pdns-recursor
     hostname: recursor
     ports:
       - "53:53/udp"
@@ -98,7 +99,7 @@ services:
     build:
       dockerfile: Dockerfile
       context: pdns-admin/
-    image: connectitnet/powerdns-admin:latest
+    image: jondwaite/powerdns-admin:latest
     deploy:
       resources:
         limits:

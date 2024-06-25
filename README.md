@@ -1,10 +1,10 @@
 # PowerDNS 4.9 Docker Images based on Debian 12 (Bookworm)
 
-This repository contains four Docker images - pdns, pdns-recursor and pdns-admin. It is forked from [PowerDNS 4.1 for Debian Stretch](https://github.com/connectitnet/powerdns-for-docker) and updated for Debian 12 and PowerDNS 4.9
+This repository contains four Docker images - pdns, pdns-recursor and pdns-admin. It is forked from [PowerDNS 4.1 for Debian Stretch](https://github.com/connectitnet/powerdns-for-docker) and updated for Debian 12 and PowerDNS Auth 4.9 & PowerDNS Recursor 5.0
 
 Image **pdns** contains completely configurable [PowerDNS 4.9.x server](https://www.powerdns.com/) with mysql and gpgsql backends.
 
-Image **pdns-recursor** contains completely configurable [PowerDNS x.x recursor](https://www.powerdns.com/).
+Image **pdns-recursor** contains completely configurable [PowerDNS 5.0 recursor](https://www.powerdns.com/).
 
 Images **pdns-admin** contains backend (gunicorn) for [PowerDNS Admin](https://github.com/ngoduykhanh/PowerDNS-Admin) web app, written in Flask, for managing PowerDNS servers. [PowerDNS Admin](https://github.com/ngoduykhanh/PowerDNS-Admin) is also completely configurable.
 
@@ -12,7 +12,7 @@ Images **pdns-admin** contains backend (gunicorn) for [PowerDNS Admin](https://g
 
 ## pdns
 
-Docker image with [PowerDNS 4.1.x server](https://www.powerdns.com/) with mysql and gpgsql backends.
+Docker image with [PowerDNS 4.9.x server](https://www.powerdns.com/) with mysql and gpgsql backends.
 
 Env vars for gmysql configuration:
 
@@ -51,7 +51,7 @@ docker run -d -p 53:53 -p 53:53/udp --name pdns-master \
   -e PDNS_soa_minimum_ttl=1200 \
   -e PDNS_allow_axfr_ips=172.5.0.21 \
   -e PDNS_only_notify=172.5.0.21 \
-  connectitnet/pdns
+  jondwaite/pdns
 ```
 
 #### Slave server with supermaster
@@ -61,17 +61,17 @@ docker run -d -p 53:53 -p 53:53/udp --name pdns-slave \
   --hostname ns2.example.com --link mariadb:mysql \
   -e BACKEND=gmysql \
   -e PDNS_gmysql_dbname=powerdnsslave \
-  -e PDNS_slave=yes \
+  -e PDNS_secondary=yes \
   -e PDNS_version_string=anonymous \
   -e PDNS_disable_axfr=yes \
   -e PDNS_allow_notify_from=172.5.0.20 \
   -e SUPERMASTER_IPS=172.5.0.20 \
-  connectitnet/pdns
+  jondwaite/pdns
 ```
 
 ## pdns-recursor
 
-Docker image with [PowerDNS 4.1.x recursor](https://www.powerdns.com/).
+Docker image with [PowerDNS 5.0 recursor](https://www.powerdns.com/).
 
 PowerDNS recursor is configurable via env vars. Every variable starting with `PDNS_` will be inserted into `/etc/pdns/recursor.conf` configuration file in the following way: prefix `PDNS_` will be stripped and every `_` will be replaced with `-` just like above. This way, you can configure the PowerDNS recursor any way you need within a `docker run` command.
 
@@ -82,7 +82,7 @@ All available settings can be found over [here](https://doc.powerdns.com/md/recu
 Recursor server with API enabled:
 
 ```shell
-docker run -d -p 53:53 -p 53:53/udp --name pdns-recursor connectitnet/pdns-recursor
+docker run -d -p 53:53 -p 53:53/udp --name pdns-recursor jondwaite/pdns-recursor
 ```
 
 ## pdns-admin
@@ -111,7 +111,7 @@ api-key=secret
 webserver=yes
 ```
 
-And again, PowerDNS connection is configured via env vars (it needs url of the PowerDNS server, api key and a version of PowerDNS server, for example 4.1.0):
+And again, PowerDNS connection is configured via env vars (it needs url of the PowerDNS server, api key and a version of PowerDNS server, for example 4.9.0):
 
 ```text
 (name=default value)
@@ -143,7 +143,7 @@ docker run -d --name pdns-admin-uwsgi \
   -e PDNS_ADMIN_LDAP_SEARCH_BASE="'ou=System Admins,ou=People,dc=example,dc=com'" \
   -e PDNS_ADMIN_LDAP_USERNAMEFIELD="'uid'" \
   -e PDNS_ADMIN_LDAP_FILTER="'(objectClass=inetorgperson)'" \
-  connectitnet/pdns-admin-uwsgi
+  jondwaite/pdns-admin-uwsgi
 ```
 
 ## pdns-admin-nginx
@@ -155,5 +155,5 @@ Front-end image with nginx and static files for [PowerDNS Admin](https://github.
 ```shell
 docker run -d --name pdns-admin-nginx \
   --link pdns-admin-uwsgi:pdns-admin-uwsgi \
-  connectitnet/pdns-admin-nginx
+  jondwaite/pdns-admin-nginx
 ```

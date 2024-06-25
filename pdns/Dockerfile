@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl gnupg apt-
 
 COPY src/ /
 
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   pdns-server \
   pdns-backend-mysql \
   pdns-backend-pgsql \

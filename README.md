@@ -40,7 +40,7 @@ All available settings can be found over [here](https://doc.powerdns.com/md/auth
 docker run -d -p 53:53 -p 53:53/udp --name pdns-master \
   --hostname ns1.example.com \
   -e BACKEND=gmysql \
-  -e PDNS_master=yes \
+  -e PDNS_primary=yes \
   -e PDNS_api=yes \
   -e PDNS_api_key=secret \
   -e PDNS_webserver=yes \
@@ -49,8 +49,6 @@ docker run -d -p 53:53 -p 53:53/udp --name pdns-master \
   -e PDNS_version_string=anonymous \
   -e PDNS_default_ttl=1500 \
   -e PDNS_soa_minimum_ttl=1200 \
-  -e PDNS_default_soa_name=ns1.example.com \
-  -e PDNS_default_soa_mail=hostmaster.example.com \
   -e PDNS_allow_axfr_ips=172.5.0.21 \
   -e PDNS_only_notify=172.5.0.21 \
   connectitnet/pdns

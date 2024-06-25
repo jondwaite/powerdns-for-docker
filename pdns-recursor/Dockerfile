@@ -1,16 +1,14 @@
-FROM python:3-stretch
-LABEL maintainer="Jonathan Senecal <JSenecal@jonathansenecal.com>"
+FROM python:3-slim-bookworm
+LABEL maintainer="Jon Waite <jondwaite@hotmail.com>"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  curl \
-  gnupg
+RUN apt-get update && apt-get install -y --no-install-recommends curl gnupg apt-transport-https \
+  && install -d /etc/apt/keyrings; curl https://repo.powerdns.com/FD380FBB-pub.asc | tee /etc/apt/keyrings/rec-50-pub.asc
 
 COPY src/ /
 
-RUN apt-key adv --no-tty --fetch-keys https://repo.powerdns.com/FD380FBB-pub.asc \
-  && apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   pdns-recursor \
   && apt-get purge -y --auto-remove curl gnupg \
   && rm -rf /var/lib/apt/lists/*
@@ -18,7 +16,7 @@ RUN apt-key adv --no-tty --fetch-keys https://repo.powerdns.com/FD380FBB-pub.asc
 RUN pip3 install envtpl \
   && rm -rf ~/.cache/*
 
-ENV VERSION=4.1 \
+ENV VERSION=5.0 \
   PDNS_setuid=pdns \
   PDNS_setgid=pdns \
   PDNS_daemon=no \

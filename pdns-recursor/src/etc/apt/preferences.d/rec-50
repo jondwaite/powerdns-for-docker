@@ -1,3 +1,3 @@
-Package: pdns-*
+Package: rec*
 Pin: origin repo.powerdns.com
 Pin-Priority: 600
